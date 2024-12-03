@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -18,7 +19,10 @@ class UserController extends Controller
             'email'=> ['required','email', 'max:255', 'unique:users'],
             'password'=> ['required','confirmed']
         ]);
-        dd($request->all());
+
+        User::create($request->all());
+
+        return redirect()->route('login')->with('success','Successfully registered');
     }
 
     public function login()
