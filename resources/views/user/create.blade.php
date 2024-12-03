@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    < class="col-md-6 offset-md-3>
+    <div class="col-md-6 offset-md-3>
      <h1> Register form </h1>
      <form action="">
 
