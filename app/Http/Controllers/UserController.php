@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use Auth;
+use Illuminate\Auth\Events\Registered;
 
 use Illuminate\Http\Request;
 
@@ -20,13 +22,28 @@ class UserController extends Controller
             'password'=> ['required','confirmed']
         ]);
 
-        User::create($request->all());
+        $user = User::create($request->all());
+        event(new Registered($user));
+        Auth::login($user);
 
-        return redirect()->route('login')->with('success','Successfully registered');
+
+
+        return redirect()->route('verification.notice');
     }
 
     public function login()
     {
         return view('user.login');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
+    public function dashboard()
+    {
+        return view('user.dashboard');
     }
 }
